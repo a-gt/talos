@@ -1,0 +1,27 @@
+{
+  "name": "talos",
+  "version": "1.0.0",
+  "description": "A simple yet complex discord.js commanding client.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ApexioDaCoder/talos.git"
+  },
+  "keywords": [
+    "discord.js",
+    "discord",
+    "discord-client"
+  ],
+  "author": "ApexioDaCoder",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ApexioDaCoder/talos/issues"
+  },
+  "homepage": "https://github.com/ApexioDaCoder/talos#readme",
+  "dependencies": {
+    "discord.js": "^12.2.0"
+  }
+}
