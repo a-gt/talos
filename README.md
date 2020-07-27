@@ -1,1 +1,2 @@
-# Talos - A simple yet complex discord.js commanding client.
+# Talos
+> A simple yet complex discord.js commanding client.
