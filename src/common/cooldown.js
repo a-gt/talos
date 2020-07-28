@@ -14,7 +14,7 @@ class Cooldown {
 
   async setup (name) {
     if (!cooldowns.has(name)) {
-      cooldowns.set(name, new Discord.Collection());
+      cooldowns.set(name, new Collection());
     }
 
     const now = Date.now();

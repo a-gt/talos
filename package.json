@@ -4,7 +4,7 @@
   "description": "A simple yet complex discord.js commanding client.",
   "main": "src/index.js",
   "scripts": {
-    "test": "nodemon test/index.js"
+    "test": "nodemon --unhandled-rejections=strict test/index.js"
   },
   "repository": {
     "type": "git",

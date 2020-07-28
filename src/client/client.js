@@ -2,6 +2,8 @@ const { Client, Collection } = require('discord.js');
 const onMessage = require('../events/message.js');
 const _ = require('lodash');
 const runCommand = require('../runCommand/runCommand');
+const help = require('../defaultCommands/help');
+const Module = require('../module');
 
 const defaultProps = (prop, defaultVal) => {
   if (prop === undefined) {
@@ -16,20 +18,24 @@ class TalosClient extends Client {
   constructor (options) {
     super(options);
     this.token = options.token;
+    const user = this.user;
     this.config = defaultProps(options.config, {
       prefix            : 't!',
-      onCommandError (msg, error) {
+      groups            : {},
+      dynamicHelp       : true,
+      description       : 'A bot made with Talos.',
+      onCommandError (msg, command, error) {
         msg.channel.send({
           embed : {
             color       : '#F04E45',
             title       : `:x: Error while doing the "${_.startCase(command.name)}" command.`,
-            description : `If this error persists please contact Prometheus Support.`,
+            description : `If this error persists please contact ${user.username} Support.`,
           },
         });
         console.error(error);
       },
-      userNoPermissions (msg) {
-        const owner = this.users.cache.get(msg.guild.ownerID);
+      userNoPermissions (msg, command) {
+        const owner = client.users.cache.get(msg.guild.ownerID);
         return msg.channel.send({
           embed : {
             color       : '#F04E45',
@@ -38,13 +44,13 @@ class TalosClient extends Client {
           },
         });
       },
-      invalidArgs       : {
+      invalidArg        : {
         invalidType (msg, command, arg, prefix) {
           msg.channel.send({
             embed : {
               color       : '#F04E45',
               title       : `:x: Invalid arguments provided for the "${_.startCase(command.name)}" command.`,
-              description : `You need to specify a \`${_.startCase(arg.type.name)}\` for the \`${_.startCase(
+              description : `You need to specify a \`${_.startCase(arg.type)}\` for the \`${_.startCase(
                 arg.name,
               )}\` argument.\n\n**Usage:**\n\`\`\`${prefix}${command.usage}\`\`\``,
             },
@@ -54,7 +60,7 @@ class TalosClient extends Client {
           msg.channel.send({
             embed : {
               color       : '#F04E45',
-              title       : `:x Invalid arguments provided for the "${_.startCase(command.name)}" command.`,
+              title       : `:x: Invalid arguments provided for the "${_.startCase(command.name)}" command.`,
               description : `Missing the \`${_.startCase(
                 arg.name,
               )}\` argument.\n\n**Usage:**\n\`\`\`${prefix}${command.usage}\`\`\``,
@@ -65,8 +71,14 @@ class TalosClient extends Client {
     });
     this.commands = new Collection();
     this.modules = new Collection();
+    this.dynamicHelp = this.config.dynamicHelp;
     if (this.token === undefined) {
       throw new Error('No token specified.');
+    }
+    if (this.dynamicHelp === true) {
+      this.addModule(new Module('Bot', `Main commands of this bot.`), [
+        help,
+      ]);
     }
     super.on('message', msg => onMessage(this, msg));
   }
@@ -80,18 +92,31 @@ class TalosClient extends Client {
     return runCommand(this, msg, command, args, prefix);
   }
 
-  addModule (name, moduleData, cmds) {
+  addModule (moduleData, cmds) {
+    const name = moduleData.name;
+    let previous = [];
+    if (this.modules.has(name)) previous = this.modules.get(name).cmds;
+    const result = previous.concat(cmds);
+    const combined = result.filter((cmd, i) => result.indexOf(cmd) === i);
     this.modules.set(name.toLowerCase(), {
       ...moduleData,
       moduleName : name.toLowerCase(),
-      cmds,
+      cmds       : combined,
     });
     cmds.forEach(cmd =>
       this.commands.set(cmd.name, {
         ...cmd,
-        module : name,
+        moduleData : name,
       }),
     );
+  }
+
+  addCommand (cmd, moduleName) {
+    if (this.modules.has(moduleName)) throw new Error(`Module "${moduleName}" doesn't exist.`);
+    this.commands.set(cmd.name, {
+      ...cmd,
+      module : moduleName,
+    });
   }
 }
 

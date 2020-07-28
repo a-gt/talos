@@ -1,4 +1,4 @@
-const parseArgs = require('./parseArgs');
+const parseArgs = require('./parseArgs.js');
 
 const runCommand = async (client, msg, command, args, prefix) => {
   if (command.subCommands) {
