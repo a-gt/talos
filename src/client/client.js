@@ -4,6 +4,7 @@ const _ = require('lodash');
 const runCommand = require('../runCommand/runCommand');
 const help = require('../defaultCommands/help');
 const Module = require('../module');
+/* eslint no-console: "error" */
 
 const defaultProps = (prop, defaultVal) => {
   if (prop === undefined) {
@@ -35,7 +36,7 @@ class TalosClient extends Client {
         console.error(error);
       },
       userNoPermissions (msg, command) {
-        const owner = client.users.cache.get(msg.guild.ownerID);
+        const owner = this.users.cache.get(msg.guild.ownerID);
         return msg.channel.send({
           embed : {
             color       : '#F04E45',

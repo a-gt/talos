@@ -7,7 +7,7 @@ const run = (client, msg, argsReturn, command, prefix) => {
   } catch (error) {
     client.config.onCommandError(msg, command, error);
   }
-  client.emit('postCommand', msg, command)
+  client.emit('postCommand', msg, command);
 };
 
 const parseArgs = async (client, msg, command, args, prefix) => {
@@ -44,8 +44,8 @@ const parseArgs = async (client, msg, command, args, prefix) => {
     );
   };
   if (command.group.toLowerCase() === 'public') {
-    await checkArgs()
-    if (go) return run(client, msg, argsReturn, command, prefix)
+    await checkArgs();
+    if (go) return run(client, msg, argsReturn, command, prefix);
   }
   else if (client.config.groups[command.group.toLowerCase()](msg, msg.author) === true) {
     await checkArgs();

@@ -7,8 +7,8 @@ class Command {
     this.description = description;
     this.args = (options || {}).args || [];
     this.args.forEach((arg, i) => {
-      if (arg.name === undefined) this.args[i].name = arg.key
-    })
+      if (arg.name === undefined) this.args[i].name = arg.key;
+    });
     this.group = (options || {}).group || 'public';
     this.type = (options || {}).type || 'string';
     this.cooldown = (options || {}).cooldown || 3;

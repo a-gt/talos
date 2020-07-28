@@ -1,5 +1,6 @@
 const EventEmitter = require('events');
 const allEmojis = require('../emojis');
+/*eslint no-new: "error"*/
 
 class PageMenu {
   constructor (channel, userId, time, args, emojis, emojiFunctions) {
@@ -22,7 +23,7 @@ class PageMenu {
             return;
           });
       });
-    this.error = args.error || (error => logger.error('pageMenu', error));
+    this.error = args.error || (error => console.error(error));
     this.pageEmojis = [
       emojis[0] || emojis.arrows[0],
       emojis[emojis.length - 1] || emojis.arrows[1],

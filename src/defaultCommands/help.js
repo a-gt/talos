@@ -15,8 +15,8 @@ module.exports = new Command(
     cooldown : 5,
     args     : [
       {
-        key : 'command',
-        type: 'string',
+        key  : 'command',
+        type : 'string',
       },
     ],
   },
@@ -37,7 +37,8 @@ module.exports = new Command(
           url : msg.client.user.displayAvatarURL({ format: 'png', dynamic: true }),
         },
         description : `${msg.client.config
-          .description}\n\n:arrow_left: : Page Backward.\n :arrow_right: : Page Forward.\n :arrow_upper_right: : Go to any page.\n :wastebasket: : Close help menu.\n\n**Page 1:** :bust_in_silhouette: | ***${msg.client.user.username} Help***\n${moduleNames}`,
+          .description}\n\n:arrow_left: : Page Backward.\n :arrow_right: : Page Forward.\n :arrow_upper_right: : Go to any page.\n :wastebasket: : Close help menu.\n\n**Page 1:** :bust_in_silhouette: | ***${msg
+          .client.user.username} Help***\n${moduleNames}`,
       },
     ];
     moduleArray.map(moduleData => {
@@ -70,7 +71,7 @@ module.exports = new Command(
 
     if (!command) {
       const moduleData = modules.get(name);
-      if (!moduleData) return msg.channel.send(':x: That\'s not a valid command or module.');
+      if (!moduleData) return msg.channel.send(":x: That's not a valid command or module.");
       let num = 0;
       moduleArray.forEach((moduleFromArray, i) => {
         if (moduleFromArray.moduleName === moduleData.moduleName) num = i + 2;

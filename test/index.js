@@ -1,6 +1,7 @@
-const { TalosClient, Module, Command } = require('../src');
+const { TalosClient } = require('../src');
 const { token } = require('./config.json');
 const _ = require('lodash');
+/* eslint no-console: "error" */
 
 const client = new TalosClient({
   token,
