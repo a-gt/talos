@@ -156,7 +156,7 @@ class PageMenu {
     }
     else {
       if (page < 0) page = 0;
-      if (page > this.data.length - 1) this.data.length - 1;
+      if (page > this.data.length - 1) page = this.data.length - 1;
     }
     this.page = page;
     this.message.edit(this.parsedData[this.page]);
