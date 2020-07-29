@@ -70,6 +70,10 @@ class TalosClient extends Client {
         },
       },
     });
+    this.getPrefix = this.config.getPrefix || (() => {
+      return this.prefix
+    });
+    this.prefix = this.config.prefix || 'k!'
     this.commands = new Collection();
     this.modules = new Collection();
     this.dynamicHelp = this.config.dynamicHelp;
@@ -81,7 +85,7 @@ class TalosClient extends Client {
         help,
       ]);
     }
-    super.on('message', msg => onMessage(this, msg));
+    super.on('message', msg => onMessage(msg));
   }
 
   connect () {

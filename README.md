@@ -5,7 +5,7 @@
 >A simple yet elegant discord.js commanding client.
 
 ## Features
-  - Simple config.
-  - Comes with a dynamic help command.
-  - Easy to use.
-  - Comes with a pagination system.
+- Simple config.
+- Comes with a dynamic help command.
+- Easy to use.
+- Comes with a pagination system.

@@ -1,16 +1,17 @@
 const types = require('./argTypes');
 
-const run = (client, msg, argsReturn, command, prefix) => {
-  client.emit('preCommand', msg, command);
+const run = (msg, argsReturn, command, prefix) => {
+  msg.client.emit('preCommand', msg, command);
   try {
     return command.run(msg, argsReturn, prefix);
   } catch (error) {
     client.config.onCommandError(msg, command, error);
   }
-  client.emit('postCommand', msg, command);
+  msg.client.emit('postCommand', msg, command);
 };
 
-const parseArgs = async (client, msg, command, args, prefix) => {
+const parseArgs = async (msg, command, args, prefix) => {
+  const client = msg.client;
   const argArray = command.args;
   const argsReturn = {};
   let go = true;
@@ -45,11 +46,11 @@ const parseArgs = async (client, msg, command, args, prefix) => {
   };
   if (command.group.toLowerCase() === 'public') {
     await checkArgs();
-    if (go) return run(client, msg, argsReturn, command, prefix);
+    if (go) return run(msg, argsReturn, command, prefix);
   }
   else if (client.config.groups[command.group.toLowerCase()](msg, msg.author) === true) {
     await checkArgs();
-    if (go) return run(client, msg, argsReturn, command, prefix);
+    if (go) return run(msg, argsReturn, command, prefix);
   }
   else if (client.config.groups[command.group.toLowerCase()] === undefined) {
     throw new Error(`Invalid group. \nGroup: "${command.group}"\nCommand: "${command.name}"`);

@@ -1,7 +1,7 @@
 {
-  "name": "talos",
-  "version": "1.0.0",
-  "description": "A simple yet complex discord.js commanding client.",
+  "name": "talos-client",
+  "version": "1.0.1",
+  "description": "A simple yet elegant discord.js commanding client.",
   "main": "src/index.js",
   "scripts": {
     "test": "nodemon --unhandled-rejections=strict test/index.js"
@@ -15,7 +15,7 @@
     "discord",
     "discord-client"
   ],
-  "author": "ApexioDaCoder",
+  "author": "apexiodacoder",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ApexioDaCoder/talos/issues"
@@ -24,6 +24,5 @@
   "dependencies": {
     "discord.js": "^12.2.0",
     "lodash": "^4.17.19"
-  },
-  "devDependencies": {}
+  }
 }

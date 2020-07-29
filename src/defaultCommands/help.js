@@ -45,7 +45,7 @@ module.exports = new Command(
       const fields = [];
       moduleData.cmds.map((command, i) => {
         fields.push({
-          name  : `**${i + 1}. ${prefix}${command.usage}**`,
+          name  : `${i + 1}. ${prefix}${command.usage}`,
           value : `\`\`\`${command.description}\`\`\``,
         });
       });

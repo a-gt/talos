@@ -1,12 +1,13 @@
 const { Cooldown } = require('../common');
 const runCommand = require('../runCommand/runCommand');
 
-module.exports = async (client, msg) => {
+module.exports = async (msg) => {
+  const client = msg.client;
   if (msg.author.bot) return;
   let args;
   let prefix;
   if (msg.guild) {
-    prefix = client.config.prefix;
+    prefix = client.getPrefix(msg);
     const isPrefix = msg.content.startsWith(prefix);
 
     if (!isPrefix) {
@@ -50,7 +51,7 @@ module.exports = async (client, msg) => {
     msg.author,
     cmd.cooldown || 3,
     () => {
-      runCommand(client, msg, cmd, args, prefix);
+      runCommand(msg, cmd, args, prefix);
     },
     timeLeft => {
       return msg.reply(`Please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${cmd.name}\` cmd.`);

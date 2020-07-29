@@ -1,7 +1,7 @@
 const { TalosClient } = require('../src');
 const { token } = require('./config.json');
 const _ = require('lodash');
-/* eslint no-console: "error" */
+const fs = require('fs');
 
 const client = new TalosClient({
   token,
@@ -61,6 +61,26 @@ const client = new TalosClient({
     },
   },
 });
+
+const dirs = fs.readdirSync(__dirname + '/commands');
+
+const loadCommands = async () => {
+  console.log('Loading commands and modules...');
+  await Promise.all(
+    dirs.map(async dir => {
+      const files = fs
+        .readdirSync(`${__dirname}/commands/${dir}`)
+        .filter(file => file.endsWith('.js') && !file.startsWith('module'));
+      const moduleImported = await require(`./commands/${dir}/module`);
+      const cmds = [];
+      await Promise.all(files.map(async file => cmds.push(await require(`./commands/${dir}/${file}`))));
+      client.addModule(moduleImported, cmds);
+    }),
+  );
+  console.log(`${client.commands.size} commands loaded and ${client.modules.size} modules loaded.`);
+};
+
+loadCommands();
 
 client.connect();
 
