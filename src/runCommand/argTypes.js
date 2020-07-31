@@ -1,5 +1,6 @@
 module.exports = {
-  user (client, val) {
+  user (val, msg) {
+    const client = msg.client
     if (val === undefined) return false;
     const matches = val.match(/^(?:<@!?)?([0-9]+)>?$/);
     if (matches === null) return false;
@@ -9,10 +10,10 @@ module.exports = {
     if (user === undefined) return false;
     else return user;
   },
-  string (client, val) {
+  string (val) {
     return val;
   },
-  channel (client, val, msg) {
+  channel (val, msg) {
     if (val === undefined) return false;
     const matches = val.match(/^(?:<#)?([0-9]+)>?$/);
     if (matches === null) return false;
@@ -22,7 +23,7 @@ module.exports = {
     if (channel === undefined) return false;
     else return channel;
   },
-  role (client, val, msg) {
+  role (val, msg) {
     if (val === undefined) return false;
     const matches = val.match(/^(?:<@&)?([0-9]+)>?$/);
     if (matches === null) return false;
@@ -32,7 +33,7 @@ module.exports = {
     if (role === undefined) return false;
     else return role;
   },
-  number (client, str) {
+  number (str) {
     if (str === undefined) return false;
     const num = parseInt(str);
     if (isNaN(num)) return false;

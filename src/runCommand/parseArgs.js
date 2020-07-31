@@ -26,7 +26,7 @@ const parseArgs = async (msg, command, args, prefix) => {
           if (arg.type.toLowerCase() === 'custom') type = arg.customType;
           else type = types[arg.type.toLowerCase()];
         }
-        let returnType = await type(client, equivalent, msg);
+        let returnType = await type(equivalent, msg);
         if (!equivalent && arg.required) {
           go = false;
           return client.config.invalidArg.missing(msg, command, arg, prefix);
@@ -37,7 +37,7 @@ const parseArgs = async (msg, command, args, prefix) => {
         }
         else if (!equivalent) return (argsReturn[arg.key] = arg.default);
         else if (i === argArray.length - 1) {
-          const val = await type(client, args.slice(i, args.length).join(' '), msg);
+          const val = await type(args.slice(i, args.length).join(' '), msg);
           return (argsReturn[arg.key] = val || undefined);
         }
         else return (argsReturn[arg.key] = returnType);
