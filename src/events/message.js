@@ -1,27 +1,23 @@
 const { Cooldown } = require('../common');
 const runCommand = require('../runCommand/runCommand');
 
-module.exports = async (msg) => {
+const escapeRegex = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+module.exports = async msg => {
   const client = msg.client;
   if (msg.author.bot) return;
   let args;
   let prefix;
   if (msg.guild) {
-    prefix = client.getPrefix(msg);
-    const isPrefix = msg.content.startsWith(prefix);
+    const prefixRegex = new RegExp(`^(<@!?${client.user.id}>|${escapeRegex(await client.getPrefix(msg))})\\s*`);
+    if (!prefixRegex.test(msg.content)) return;
+    prefix = await client.getPrefix(msg);
 
-    if (!isPrefix) {
-      if (new RegExp(`^<@${client.user.id}>|^<@!${client.user.id}>`).test(msg.content)) {
-        if (new RegExp(`^<@${client.user.id}>`).test(msg.content)) {
-          prefix = `<@${client.user.id}>`;
-        }
-        else {
-          prefix = `<@!${client.user.id}>`;
-        }
-      }
-      else return;
-    }
-    args = msg.content.slice(prefix.length).split(/\s+/);
+    const [
+      ,
+      matchedPrefix,
+    ] = msg.content.match(prefixRegex);
+    args = msg.content.slice(matchedPrefix.length).trim().split(/ +/);
   }
   else {
     args = msg.content.split(/\s+/);
