@@ -6,7 +6,7 @@ class Module {
     this.descriptions = description;
     this.group = (options || {}).group || 'public';
     this.color = (options || {}).color || '#18FFFF';
-    this.emoji = (options || {}).emojis || ':robot:';
+    this.emoji = (options || {}).emoji || ':robot:';
     this.image = (options || {}).image || 'https://i.imgur.com/8zisgQe.png';
   }
 }
