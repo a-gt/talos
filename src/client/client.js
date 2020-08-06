@@ -6,21 +6,12 @@ const help = require('../defaultCommands/help');
 const Module = require('../module');
 /* eslint no-console: "error" */
 
-const defaultProps = (prop, defaultVal) => {
-  if (prop === undefined) {
-    return defaultVal;
-  }
-  else {
-    return prop;
-  }
-};
-
 class TalosClient extends Client {
   constructor (options) {
     super(options);
     this.token = options.token;
     const user = this.user;
-    const config = defaultProps(options.config, {
+    const defaultConfig = {
       prefix            : 't!',
       groups            : {},
       dynamicHelp       : true,
@@ -72,60 +63,8 @@ class TalosClient extends Client {
           });
         },
       },
-    });
-    this.config = {
-      prefix            : defaultProps(config.prefix, 't!'),
-      groups            : defaultProps(config.groups, {}),
-      dynamicHelp       : defaultProps(config.dynamicHelp, true),
-      description       : defaultProps(config.description, 'A bot made with Talos'),
-      onCommandError    : defaultProps(config.onCommandError, (msg, command, error) => {
-        msg.channel.send({
-          embed : {
-            color       : '#F04E45',
-            title       : `:x: Error while doing the "${_.startCase(command.name)}" command.`,
-            description : `If this error persists please contact ${user.username} Support.`,
-          },
-        });
-        console.error(error);
-      }),
-      userNoPermissions : defaultProps(config.userNoPermissions, (msg, command) => {
-        const owner = this.users.cache.get(msg.guild.ownerID);
-        return msg.channel.send({
-          embed : {
-            color       : '#F04E45',
-            title       : `:x: You have insufficient permissions for the "${_.startCase(command.name)}" command.`,
-            description : `If you believe this is incorrect contact the server owner, **${owner.tag}**.`,
-          },
-        });
-      }),
-      invalidArg        : {
-        invalidType : defaultProps(config.invalidArg.invalidType, (msg, command, arg, prefix) => {
-          msg.channel.send({
-            embed : {
-              color       : '#F04E45',
-              title       : `:x: Invalid arguments provided for the "${_.startCase(command.name)}" command.`,
-              description : `You need to specify a \`${_.startCase(arg.type)}\` for the \`${_.startCase(
-                arg.name,
-              )}\` argument.\n\n**Usage:**\n\`\`\`${prefix}${command.usage}\`\`\``,
-            },
-          });
-        }),
-        missing     : defaultProps(config.invalidArg.missing, (msg, command, arg, prefix) => {
-          msg.channel.send({
-            embed : {
-              color       : '#F04E45',
-              title       : `:x: Invalid arguments provided for the "${_.startCase(command.name)}" command.`,
-              description : `Missing the \`${_.startCase(
-                arg.name,
-              )}\` argument.\n\n**Usage:**\n\`\`\`${prefix}${command.usage}\`\`\``,
-            },
-          });
-        }),
-      },
-      getPrefix         : defaultProps(config.getPrefix, () => {
-        return this.prefix;
-      }),
     };
+    this.config = _.extend({}, defaultConfig, options.config);
     this.getPrefix = this.config.getPrefix;
     this.prefix = this.config.prefix;
     this.commands = new Collection();
