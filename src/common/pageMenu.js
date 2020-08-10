@@ -90,6 +90,9 @@ class PageMenu {
                 footer    : {
                   text : `${
                     el.footer ? el.footer.text + ' | ' :
+                    ''}${
+                    embed.footer ? el.footer ? embed.footer.text + ' | ' :
+                    embed.footer.text + ' | ' :
                     ''}${index + 1}/${data.length}`,
                 },
                 timestamp : new Date(),
@@ -114,7 +117,12 @@ class PageMenu {
                 ...embed,
                 description : el.toString(),
                 footer      : {
-                  text : `Page ${index + 1}/${data.length}`,
+                  text : `${
+                    el.footer ? el.footer.text + ' | ' :
+                    ''}${
+                    embed.footer ? el.footer ? embed.footer.text + ' | ' :
+                    embed.footer.text + ' | ' :
+                    ''}${index + 1}/${data.length}`,
                 },
                 timestamp   : new Date(),
               },
