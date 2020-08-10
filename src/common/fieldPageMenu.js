@@ -93,7 +93,9 @@ class FieldPageMenu {
             ...embed,
             fields    : el,
             footer    : {
-              text : `Page ${index + 1}/${data.length}`,
+              text : `${
+                embed.footer ? embed.footer.text + ' | ' :
+                ''}Page ${index + 1}/${data.length}`,
             },
             timestamp : new Date(),
           },

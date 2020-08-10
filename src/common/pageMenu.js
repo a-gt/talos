@@ -88,7 +88,9 @@ class PageMenu {
               embed : {
                 ...el,
                 footer    : {
-                  text : `Page ${index + 1}/${data.length}`,
+                  text : `${
+                    el.footer ? el.footer.text + ' | ' :
+                    ''}${index + 1}/${data.length}`,
                 },
                 timestamp : new Date(),
               },

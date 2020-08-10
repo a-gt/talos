@@ -43,6 +43,9 @@ module.exports = new Command('field', [], 'Try out the field page menu.', {}, ms
       trash : true,
       jump  : true,
       start : 1,
+      embed : {
+        footer : { text: 'Field Rock' },
+      },
     },
     [
       '⬅️',
