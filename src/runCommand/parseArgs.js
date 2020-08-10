@@ -5,7 +5,7 @@ const run = (msg, argsReturn, command, prefix) => {
   try {
     return command.run(msg, argsReturn, prefix);
   } catch (error) {
-    client.config.onCommandError(msg, command, error);
+    msg.client.config.onCommandError(msg, command, error);
   }
   msg.client.emit('postCommand', msg, command);
 };
