@@ -93,9 +93,10 @@ class FieldPageMenu {
             ...embed,
             fields    : el,
             footer    : {
-              text : `${
+              text     : `${
                 embed.footer ? embed.footer.text + ' | ' :
                 ''}Page ${index + 1}/${data.length}`,
+              icon_url : (embed.footer || { footer: { icon_url: undefined } }).icon_url,
             },
             timestamp : new Date(),
           },
