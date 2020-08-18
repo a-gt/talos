@@ -4,7 +4,7 @@ const allEmojis = require('../emojis');
 
 const chunk = (chunkSize, array) => {
   let chunked = [];
-  for (var i = 0; i < array.length; i += chunkSize) chunked.push(array.slice(i, i + chunkSize))
+  for (let i = 0; i < array.length; i += chunkSize) chunked.push(array.slice(i, i + chunkSize))
   if (chunked.length === 0) chunked = [];
   return chunked;
 };
