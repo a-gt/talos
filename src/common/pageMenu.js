@@ -91,8 +91,8 @@ class PageMenu {
                   text     : `${
                     el.footer ? el.footer.text + ' | ' :
                     ''}${
-                    embed.footer ? el.footer ? embed.footer.text + ' | ' :
-                    embed.footer.text + ' | ' :
+                    embed.footer ? (el.footer ? embed.footer.text + ' | ' :
+                    embed.footer.text + ' | ') :
                     ''}${index + 1}/${data.length}`,
                   icon_url : (el.footer || embed.footer || { footer: { icon_url: undefined } }).icon_url,
                 },
