@@ -86,8 +86,7 @@ class TalosClient extends Client {
   }
 
   runCommand (name, msg, args, prefix) {
-    const command = this.commands.get(name) || this.commands.find(cmd => cmd.aliases && cmd.aliases.includes(name));
-    return runCommand(this, msg, command, args, prefix);
+    return runCommand(name, msg, args, prefix);
   }
 
   addModule (moduleData, cmds) {
