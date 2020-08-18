@@ -3,9 +3,10 @@ const allEmojis = require('../emojis');
 /*eslint no-new: "error"*/
 
 const chunk = (chunkSize, array) => {
-  var R = [];
-  for (var i = 0; i < array.length; i += chunkSize) R.push(array.slice(i, i + chunkSize));
-  return R;
+  let chunked = [];
+  for (var i = 0; i < array.length; i += chunkSize) chunked.push(array.slice(i, i + chunkSize))
+  if (chunked.length === 0) chunked = [];
+  return chunked;
 };
 
 class FieldPageMenu {
@@ -18,9 +19,7 @@ class FieldPageMenu {
     if (this.maxFields > 25) {
       this.maxFields = 25;
     }
-    this.data = chunk(this.maxFields, args.data) || [
-      [],
-    ];
+    this.data = chunk(this.maxFields, args.data);
     this.start = args.start - 1 || 0;
     this.embed = args.embed || {
       title : 'Field Page Menu',
